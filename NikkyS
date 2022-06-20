@@ -422,7 +422,7 @@ TextButton_7.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 TextButton_7.Position = UDim2.new(0.0182291269, 0, 0.50420171, 0)
 TextButton_7.Size = UDim2.new(0, 107, 0, 26)
 TextButton_7.Font = Enum.Font.Bangers
-TextButton_7.Text = "Trip Hub"
+TextButton_7.Text = "Soon"
 TextButton_7.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_7.TextSize = 14.000
 TextButton_7.MouseButton1Down:Connect(function()
@@ -454,7 +454,6 @@ TextButton_9.Text = "Soon"
 TextButton_9.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_9.TextSize = 14.000
 TextButton_9.MouseButton1Down:Connect(function()
-local args = {
 
 end)
 

@@ -54,7 +54,7 @@ TextLabel.Parent = Frame
 TextLabel.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
 TextLabel.Size = UDim2.new(0, 384, 0, 34)
 TextLabel.Font = Enum.Font.Bangers
-TextLabel.Text = "TheFrexZy"
+TextLabel.Text = "ShRinyk#7294"
 TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel.TextSize = 28.000
 TextLabel.TextStrokeColor3 = Color3.fromRGB(38, 136, 54)
@@ -504,11 +504,19 @@ TextButton_11.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 TextButton_11.Position = UDim2.new(0.361979127, 0, 0.680672288, 0)
 TextButton_11.Size = UDim2.new(0, 107, 0, 26)
 TextButton_11.Font = Enum.Font.Bangers
-TextButton_11.Text = "soon"
+TextButton_11.Text = "Auto Stomp"
 TextButton_11.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_11.TextSize = 14.000
 TextButton_11.MouseButton1Down:Connect(function()
+getgenv().l = true
+while getgenv().l do
+wait(0.1)
+local args = {
+    [1] = "Stomp"
+}
 
+game:GetService("ReplicatedStorage"):FindFirstChild(".gg/untitledhood"):FireServer(unpack(args))
+end
 end)
 
 UICorner_13.Parent = TextButton_11
@@ -532,7 +540,7 @@ TextLabel_2.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
 TextLabel_2.Position = UDim2.new(0, 0, 0.857142866, 0)
 TextLabel_2.Size = UDim2.new(0, 384, 0, 34)
 TextLabel_2.Font = Enum.Font.Bangers
-TextLabel_2.Text = "4444ZXC#0001"
+TextLabel_2.Text = "Untitled Hood"
 TextLabel_2.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextLabel_2.TextSize = 28.000
 TextLabel_2.TextStrokeColor3 = Color3.fromRGB(38, 136, 54)

@@ -68,12 +68,11 @@ TextButton.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 TextButton.Position = UDim2.new(0.018229166, 0, 0.176470593, 0)
 TextButton.Size = UDim2.new(0, 107, 0, 26)
 TextButton.Font = Enum.Font.Bangers
-TextButton.Text = "CarlHub"
+TextButton.Text = "BunnyX"
 TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton.TextSize = 14.000
 TextButton.MouseButton1Down:Connect(function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/carlcoded/carlispro/main/carlhub'))()
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/sayishot/BunnyX/main/script"))()
 end)
 
 UICorner_3.Parent = TextButton
@@ -409,11 +408,11 @@ TextButton_6.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 TextButton_6.Position = UDim2.new(0.0182291269, 0, 0.340336144, 0)
 TextButton_6.Size = UDim2.new(0, 107, 0, 26)
 TextButton_6.Font = Enum.Font.Bangers
-TextButton_6.Text = "Reviz Admin"
+TextButton_6.Text = "Soon"
 TextButton_6.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_6.TextSize = 14.000
 TextButton_6.MouseButton1Down:Connect(function()
-loadstring(game:GetObjects("rbxassetid://3014051754")[1].Source)()
+
 end)
 
 UICorner_8.Parent = TextButton_6
@@ -423,28 +422,11 @@ TextButton_7.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 TextButton_7.Position = UDim2.new(0.0182291269, 0, 0.50420171, 0)
 TextButton_7.Size = UDim2.new(0, 107, 0, 26)
 TextButton_7.Font = Enum.Font.Bangers
-TextButton_7.Text = "Infinite Yeild"
+TextButton_7.Text = "Trip Hub"
 TextButton_7.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_7.TextSize = 14.000
 TextButton_7.MouseButton1Down:Connect(function()
-loadstring(game:HttpGet(('https://pastebin.com/raw/tzTXmYf2'),true))()
-local name = game:service'Players'.LocalPlayer.Character.Name
-
-
-  if game.Players.LocalPlayer.Character:FindFirstChild(game.Players.LocalPlayer.leaderstats.FirstName.Value) then
-            game.Players.LocalPlayer.Character[game.Players.LocalPlayer.leaderstats.FirstName.Value].Parent = nil
-        end
-
-        if game.Players.LocalPlayer.Character:FindFirstChild("Artifacts") then
-            game.Players.LocalPlayer.Character.Artifacts.Parent = nil
-            if game.Players.LocalPlayer.Character:FindFirstChild("BrokenLeg") then
-                game.Players.LocalPlayer.Character.BrokenLeg.Parent = nil
-            end
-            if game.Players.LocalPlayer.Character:FindFirstChild("BrokenRib") then
-                game.Players.LocalPlayer.Character.BrokenRib.Parent = nil
-            end
-            wait(0.1)
-        end
+loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\114\97\119\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\71\97\109\101\114\69\109\105\108\105\97\110\111\70\70\47\116\114\105\112\95\47\109\97\105\110\47\72\117\98\10",true))()
 end)
 
 UICorner_9.Parent = TextButton_7
@@ -468,16 +450,11 @@ TextButton_9.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 TextButton_9.Position = UDim2.new(0.690104127, 0, 0.50420171, 0)
 TextButton_9.Size = UDim2.new(0, 107, 0, 26)
 TextButton_9.Font = Enum.Font.Bangers
-TextButton_9.Text = "TryHard Song"
+TextButton_9.Text = "Soon"
 TextButton_9.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_9.TextSize = 14.000
 TextButton_9.MouseButton1Down:Connect(function()
 local args = {
-    [1] = "Boombox",
-    [2] = "6883281970"
-}
-
-game:GetService("ReplicatedStorage"):FindFirstChild(".gg/untitledhood"):FireServer(unpack(args))
 
 end)
 
@@ -488,12 +465,10 @@ TextButton_10.BackgroundColor3 = Color3.fromRGB(79, 79, 79)
 TextButton_10.Position = UDim2.new(0.690104127, 0, 0.680672288, 0)
 TextButton_10.Size = UDim2.new(0, 107, 0, 26)
 TextButton_10.Font = Enum.Font.Bangers
-TextButton_10.Text = "RemoteSpy"
+TextButton_10.Text = "Soon"
 TextButton_10.TextColor3 = Color3.fromRGB(0, 0, 0)
 TextButton_10.TextSize = 14.000
 TextButton_10.MouseButton1Down:Connect(function()
-
-loadstring(game:HttpGet('https://raw.githubusercontent.com/kickTh/xNeroSpy/main/SimpleSpy.lua.txt'))();
 
 end)
 

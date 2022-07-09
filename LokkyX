@@ -1,0 +1,444 @@
+local DiscordLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt"))();
+
+local Win1 = DiscordLib:Window("LokkyX") -- Title/Name
+
+local Tab1 = Win1:Server("UntitledHood", "") -- Server/Tab
+
+local Chann1 = Tab1:Channel("Scripts")
+
+Chann1:Label("———————————————player—————————————————")
+
+Chann1:Button("Headless(not fe)", function()
+game.Players.LocalPlayer.Character.Head.Transparency = 1 -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("korblox(not fe)", function()
+   local ply = game.Players.LocalPlayer
+        local chr = ply.Character
+        chr.RightLowerLeg.MeshId = "902942093"
+        chr.RightLowerLeg.Transparency = "1"
+        chr.RightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
+        chr.RightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
+        chr.RightFoot.MeshId = "902942089"
+        chr.RightFoot.Transparency = "1" -- The Scirpt The Button Executes
+end)
+
+Chann1:Label("———————————————combat———————————————")
+
+Chann1:Button("BeruLock", function()
+DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("KāīDot", function()
+local ScreenGui = Instance.new("ScreenGui")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+
+
+_G.KEY = "q"
+_G.PART = "HumanoidRootPart"
+_G.PRED = 0.12628
+_G.Frame = Vector3.new(0,0.53,0)
+
+
+local CC = game:GetService "Workspace".CurrentCamera
+local Plr
+local enabled = false
+local accomidationfactor = nil
+local mouse = game.Players.LocalPlayer:GetMouse()
+local placemarker = Instance.new("Part", game.Workspace)
+local guimain = Instance.new("Folder", game.CoreGui)
+
+function makemarker(Parent, Adornee, Color, Size, Size2)
+    local e = Instance.new("BillboardGui", Parent)
+    e.Name = "PP"
+    e.Adornee = Adornee
+    e.Size = UDim2.new(Size, Size2, Size, Size2)
+    e.AlwaysOnTop = true
+    local a = Instance.new("Frame", e)
+    a.Size = UDim2.new(4, 0, 4, 0)
+    a.BackgroundTransparency = 0.1
+    a.BackgroundColor3 = Color
+    local g = Instance.new("UICorner", a)
+    g.CornerRadius = UDim.new(50, 50)
+    return (e)
+end
+
+local data = game.Players:GetPlayers()
+function noob(player)
+    local character
+    repeat
+        wait()
+    until player.Character
+    local handler = makemarker(guimain, player.Character:WaitForChild(_G.PART), Color3.fromRGB(99, 9, 255), 0.0, 0)
+    handler.Name = player.Name
+    player.CharacterAdded:connect(
+        function(Char)
+            handler.Adornee = Char:WaitForChild(_G.PART)
+        end
+    )
+
+    local TextLabel = Instance.new("TextLabel", handler)
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Position = UDim2.new(0, 0, 0, -50)
+    TextLabel.Size = UDim2.new(0, 100, 0, 100)
+    TextLabel.Font = Enum.Font.SourceSansSemibold
+    TextLabel.TextSize = 14
+    TextLabel.TextColor3 = Color3.new(1, 1, 1)
+    TextLabel.TextStrokeTransparency = 0
+    TextLabel.TextYAlignment = Enum.TextYAlignment.Bottom
+    TextLabel.Text = "Name: " .. player.Name
+    TextLabel.ZIndex = 10
+
+    spawn(
+        function()
+            while wait() do
+                if player.Character then
+                --TextLabel.Text = player.Name.." | Bounty: "..tostring(player:WaitForChild("leaderstats").Wanted.Value).." | "..tostring(math.floor(player.Character:WaitForChild("Humanoid").Health))
+                end
+            end
+        end
+    )
+end
+
+for i = 1, #data do
+    if data[i] ~= game.Players.LocalPlayer then
+        noob(data[i])
+    end
+end
+
+game.Players.PlayerAdded:connect(
+    function(Player)
+        noob(Player)
+    end
+)
+
+game.Players.PlayerRemoving:Connect(
+    function(player)
+        guimain[player.Name]:Destroy()
+    end
+)
+
+spawn(
+    function()
+        placemarker.Anchored = true
+        placemarker.CanCollide = false
+        placemarker.Size = Vector3.new(0.1, 0.1, 0.1)
+        placemarker.Transparency = 0.1
+        makemarker(placemarker, placemarker, Color3.fromRGB(0, 122, 255), 0.20, 0)
+    end
+)
+
+mouse.KeyDown:Connect(
+    function(k)
+        if k ~= _G.KEY then
+            return
+        end
+        if enabled then
+            -- guimain[Plr.Name].Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            enabled = false
+            TextLabel.TextColor3 = Color3.fromRGB(255, 20, 75)
+            TextLabel.Text = "------"
+        else
+            --guimain[Plr.Name].Frame.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+            enabled = true
+            Plr = getClosestPlayerToCursor()
+            TextLabel.TextColor3 = Color3.fromRGB(12, 255, 0)
+            TextLabel.Text = Plr.Character.Humanoid.DisplayName
+        end
+    end)
+
+function getClosestPlayerToCursor()
+    local closestPlayer
+    local shortestDistance = math.huge
+
+    for i, v in pairs(game.Players:GetPlayers()) do
+        if
+            v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and
+                v.Character.Humanoid.Health ~= 0 and
+                v.Character:FindFirstChild(_G.PART)
+         then
+            local pos = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+            local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(mouse.X, mouse.Y)).magnitude
+            if magnitude < shortestDistance then
+                closestPlayer = v
+                shortestDistance = magnitude
+            end
+        end
+    end
+    return closestPlayer
+end
+
+game:GetService "RunService".Stepped:connect(
+    function()
+        if enabled and Plr.Character and Plr.Character:FindFirstChild(_G.PART) then
+            placemarker.CFrame =
+                CFrame.new(Plr.Character[_G.PART].Position + _G.Frame + (Plr.Character[_G.PART].Velocity * accomidationfactor))
+        else
+            placemarker.CFrame = CFrame.new(0, 9999, 0)
+        end
+    end
+)
+
+local mt = getrawmetatable(game)
+local old = mt.__namecall
+setreadonly(mt, false)
+mt.__namecall =
+    newcclosure(
+    function(...)
+        local args = {...}
+        if enabled and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
+            args[3] = Plr.Character[_G.PART].Position+ _G.Frame + (Plr.Character[_G.PART].Velocity * accomidationfactor)
+            return old(unpack(args))
+        end
+        return old(...)
+    end
+)
+
+game.Players.LocalPlayer.Chatted:Connect(
+    function(Chat)
+        if Chat == "print" then
+            print(_G.PRED)
+        end
+    end
+)
+
+game.Players.LocalPlayer.Chatted:Connect(
+    function(Chat)
+        if Chat == "Code:1029" then
+
+            _G.KEY = nil
+            _G.AIR = nil
+            _G.PART = nil
+            _G.PRED = nil
+            TextLabel.Visible = false
+
+
+        end
+    end
+)
+
+game.Players.LocalPlayer.Chatted:Connect(
+    function(Chat)
+        if Chat == "Code:1030" then
+
+            _G.KEY = "q"
+            _G.AIR = 0.00005
+            _G.PART = "LowerTorso"
+            _G.PRED = 0.029
+            TextLabel.Visible = true
+
+
+        end
+    end
+)
+
+game.Players.LocalPlayer.Chatted:Connect(
+    function(Chat)
+        if Chat == "P+" then
+
+
+            _G.PRED = _G.PRED+0.001
+
+
+
+        end
+    end
+)
+
+game.Players.LocalPlayer.Chatted:Connect(
+    function(Chat)
+        if Chat == "P-" then
+
+            _G.PRED = _G.PRED-0.001
+
+
+
+        end
+    end
+)
+
+
+
+while wait() do
+    --[[
+    if getClosestPlayerToCursor().Character.Humanoid.FloorMaterial == Enum.Material.Air then
+        accomidationfactor = _G.AIR
+        print("jump 1")
+    else
+        local ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+        local Value = tostring(ping)
+        local pingValue = Value:split(" ")
+        local PingNumber = pingValue[1]
+
+        accomidationfactor = PingNumber / 1000 + 0.016
+    end
+    ]]
+    if getClosestPlayerToCursor().Character.Humanoid.Jump == true and getClosestPlayerToCursor().Character.Humanoid.FloorMaterial == Enum.Material.Air then
+        _G.Frame = Vector3.new(0,-2.3,0)
+wait(0.05)
+    else
+        local ping = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+        local Value = tostring(ping)
+        local pingValue = Value:split(" ")
+        local PingNumber = pingValue[1]
+        
+        accomidationfactor = PingNumber / 1000 + _G.PRED
+        _G.Frame = Vector3.new(0,0.53,0)
+
+    end
+    
+end
+ -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("JoseLock", function()
+loadstring(game:HttpGet("https://pastebin.com/raw/A60RhPrZ"))()-- The Scirpt The Button Executes
+end)
+
+Chann1:Label("———————————————teleport———————————————")
+
+Chann1:Button("DoubleBarrelSG", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(332.6334228515625, 57.04527282714844, -1763.2945556640625) -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Revolver", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(222.515793, 57.045728, -1163.8186) -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("DownHill", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(463.822509765625, 57.32100296020508, -1321.987060546875) -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Food", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(181.77667236328125, 97.959716796875, -442.0047607421875) -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Backrooms", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48729.2734375, 10815.8291015625, -47655.16796875) -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Armor", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(117.07687377929688, 143.33924865722656, -1179.832275390625)
+end)
+
+Chann1:Button("UpHill", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(276.7944030761719, 96.58828735351562, -287.5398254394531)  -- The Scirpt The Button Executes
+end)
+
+Chann1:Label("————————————————Others———————————————")
+
+Chann1:Button("15x", function()
+loadstring("\108\111\97\100\115\116\114\105\110\103\40\34\92\49\48\56\92\49\49\49\92\57\55\92\49\48\48\92\49\49\53\92\49\49\54\92\49\49\52\92\49\48\53\92\49\49\48\92\49\48\51\92\52\48\92\49\48\51\92\57\55\92\49\48\57\92\49\48\49\92\53\56\92\55\50\92\49\49\54\92\49\49\54\92\49\49\50\92\55\49\92\49\48\49\92\49\49\54\92\52\48\92\51\52\92\49\48\52\92\49\49\54\92\49\49\54\92\49\49\50\92\49\49\53\92\53\56\92\52\55\92\52\55\92\49\49\52\92\57\55\92\49\49\57\92\52\54\92\49\48\51\92\49\48\53\92\49\49\54\92\49\48\52\92\49\49\55\92\57\56\92\49\49\55\92\49\49\53\92\49\48\49\92\49\49\52\92\57\57\92\49\49\49\92\49\49\48\92\49\49\54\92\49\48\49\92\49\49\48\92\49\49\54\92\52\54\92\57\57\92\49\49\49\92\49\48\57\92\52\55\92\53\52\92\53\52\92\55\49\92\49\48\48\92\57\55\92\55\49\92\49\49\49\92\49\48\48\92\52\55\92\52\57\92\53\51\92\56\56\92\52\53\92\54\55\92\56\50\92\54\53\92\54\55\92\55\53\92\54\57\92\54\56\92\52\55\92\49\48\57\92\57\55\92\49\48\53\92\49\49\48\92\52\55\92\54\57\92\57\48\92\51\55\92\53\48\92\52\56\92\54\55\92\56\50\92\54\53\92\54\55\92\55\53\92\54\57\92\54\56\92\51\55\92\53\48\92\52\56\92\54\54\92\56\57\92\51\55\92\53\48\92\52\56\92\55\55\92\55\51\92\55\56\92\51\55\92\53\48\92\52\56\92\56\56\92\51\55\92\53\48\92\52\56\92\57\48\92\55\57\92\56\50\92\54\56\92\55\57\92\51\52\92\52\52\92\49\49\54\92\49\49\52\92\49\49\55\92\49\48\49\92\52\49\92\52\49\92\52\48\92\52\49\92\49\48\34\41\40\41\10")()
+
+ -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("DeleteDisplayNames", function()
+while wait(1) do 
+for i,v in pairs(game.Players:GetPlayers()) do
+    v.Character.Humanoid.DisplayName = v.Name
+  end
+end
+end)
+
+Chann1:Button("KeyBoard", function()
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/manimcool21/Keyboard-FE/main/Protected%20(3).lua'),true))()
+end)
+
+Chann1:Button("Only6EXLock", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/0nly6Ex/wfwf/main/aimbot"))()
+---- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Carlhub", function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/carlcoded/carlispro/main/carlhub'))()
+ -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("PickleAssist", function()
+loadstring(game:HttpGet("https://pastebin.com/raw/2CitME2H"))() -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Auto.Stomp.Gui.by.Kai", function()
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+
+local w = library:CreateWindow("Untitled hood") -- Creates the window
+
+local b = w:CreateFolder("Auto") -- Creates the folder(U will put here your buttons,etc)
+
+b:Button("Auto Stomp On",function()
+getgenv().l = true
+while getgenv().l do
+wait(0.000000000001)
+local args = {
+    [1] = "Stomp"
+}
+
+game:GetService("ReplicatedStorage"):FindFirstChild(".gg/untitledhood"):FireServer(unpack(args))
+end
+end)
+
+b:Button("Auto Stomp Off",function()
+getgenv().l = false
+while getgenv().l do
+wait(0.000000000001)
+local args = {
+    [1] = "Stomp"
+}
+
+game:GetService("ReplicatedStorage"):FindFirstChild(".gg/untitledhood"):FireServer(unpack(args))
+end
+end)
+
+b:DestroyGui()
+
+--[[
+How to refresh a dropdown:
+1)Create the dropdown and save it in a variable
+local yourvariable = b:Dropdown("Hi",yourtable,function(a)
+    print(a)
+end)
+2)Refresh it using the function
+yourvariable:Refresh(yourtable)
+How to refresh a label:
+1)Create your label and save it in a variable
+local yourvariable = b:Label("Pretty Useless NGL",{
+    TextSize = 25; -- Self Explaining
+    TextColor = Color3.fromRGB(255,255,255);
+    BgColor = Color3.fromRGB(69,69,69);
+})
+2)Refresh it using the function
+yourvariable:Refresh("Hello") It will only change the text ofc
+]]
+-- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Soon", function()
+DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Soon", function()
+DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Soon", function()
+DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Soon", function()
+DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Soon", function()
+DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+end)
+
+Chann1:Button("Soon", function()
+DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+end)

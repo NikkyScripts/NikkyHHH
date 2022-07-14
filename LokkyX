@@ -1,18 +1,131 @@
-local DiscordLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt"))();
 
-local Win1 = DiscordLib:Window("LokkyX") -- Title/Name
+local Library = loadstring(Game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wizard"))()
 
-local Tab1 = Win1:Server("UntitledHood", "") -- Server/Tab
+local PhantomForcesWindow = Library:NewWindow("Untitled Hood")
 
-local Chann1 = Tab1:Channel("Scripts")
+local L1 = PhantomForcesWindow:NewSection("Player")
 
-Chann1:Label("———————————————player—————————————————")
+local L2 = PhantomForcesWindow:NewSection("Combat")
 
-Chann1:Button("Headless(not fe)", function()
-game.Players.LocalPlayer.Character.Head.Transparency = 1 -- The Scirpt The Button Executes
+local L3 = PhantomForcesWindow:NewSection("Animation")
+
+local L4 = PhantomForcesWindow:NewSection("Teleport")
+
+L1:CreateButton("Fly", function()
+local plr = game.Players.LocalPlayer
+	local mouse = plr:GetMouse()
+	local Humanoid = game.Players.LocalPlayer.Character.Humanoid or game.Players.LocalPlayer.Character.humanoid  
+
+	localplayer = plr
+
+	if workspace:FindFirstChild("Core") then
+		workspace.Core:Destroy()
+	end
+
+	local Core = Instance.new("Part")
+	Core.Name = "Core"
+	Core.Size = Vector3.new(0.05, 0.05, 0.05)
+
+	spawn(function()
+		Core.Parent = workspace
+		local Weld = Instance.new("Weld", Core)
+		Weld.Part0 = Core
+		Weld.Part1 = localplayer.Character.LowerTorso
+		Weld.C0 = CFrame.new(0, 0, 0)
+	end)
+
+	workspace:WaitForChild("Core")
+
+	local torso = workspace.Core
+	flying = true
+	local speed=10
+	local keys={a=false,d=false,w=false,s=false} 
+	local e1
+	local e2
+	local function start()
+		local pos = Instance.new("BodyPosition",torso)
+		local gyro = Instance.new("BodyGyro",torso)
+		pos.Name="EPIXPOS"
+		pos.maxForce = Vector3.new(math.huge, math.huge, math.huge)
+		pos.position = torso.Position
+		gyro.maxTorque = Vector3.new(9e9, 9e9, 9e9) 
+		gyro.cframe = torso.CFrame
+		repeat
+			wait()
+			Humanoid.PlatformStand=true
+			local new=gyro.cframe - gyro.cframe.p + pos.position
+			if not keys.w and not keys.s and not keys.a and not keys.d then
+				speed=5
+			end
+			if keys.w then 
+				new = new + workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+				speed=speed+0
+			end
+			if keys.s then 
+				new = new - workspace.CurrentCamera.CoordinateFrame.lookVector * speed
+				speed=speed+0
+			end
+			if keys.d then 
+				new = new * CFrame.new(speed,0,0)
+				speed=speed+0
+			end
+			if keys.a then 
+				new = new * CFrame.new(-speed,0,0)
+				speed=speed+0
+			end
+			if speed>10 then
+				speed=5
+			end
+			pos.position=new.p
+			if keys.w then
+				gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(-math.rad(speed*0),0,0)
+			elseif keys.s then
+				gyro.cframe = workspace.CurrentCamera.CoordinateFrame*CFrame.Angles(math.rad(speed*0),0,0)
+			else
+				gyro.cframe = workspace.CurrentCamera.CoordinateFrame
+			end
+		until flying == false
+		if gyro then gyro:Destroy() end
+		if pos then pos:Destroy() end
+		flying=false
+		Humanoid.PlatformStand=false
+		speed=10
+	end
+	e1=mouse.KeyDown:connect(function(key)
+		if not torso or not torso.Parent then flying=false e1:disconnect() e2:disconnect() return end
+		if key=="w" then
+			keys.w=true
+		elseif key=="s" then
+			keys.s=true
+		elseif key=="a" then
+			keys.a=true
+		elseif key=="d" then
+			keys.d=true
+		elseif key=="x" then
+			if flying==true then
+				flying=false
+			else
+				flying=true
+				start()
+			end
+		end
+	end)
+	e2=mouse.KeyUp:connect(function(key)
+		if key=="w" then
+			keys.w=false
+		elseif key=="s" then
+			keys.s=false
+		elseif key=="a" then
+			keys.a=false
+		elseif key=="d" then
+			keys.d=false
+		end
+	end)
+	start()
 end)
 
-Chann1:Button("korblox(not fe)", function()
+
+L1:CreateButton("korblox", function()
    local ply = game.Players.LocalPlayer
         local chr = ply.Character
         chr.RightLowerLeg.MeshId = "902942093"
@@ -20,224 +133,45 @@ Chann1:Button("korblox(not fe)", function()
         chr.RightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
         chr.RightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
         chr.RightFoot.MeshId = "902942089"
-        chr.RightFoot.Transparency = "1" -- The Scirpt The Button Executes
+        chr.RightFoot.Transparency = "1"
 end)
 
-Chann1:Label("———————————————combat———————————————")
 
-Chann1:Button("BeruLock", function()
---[[
-в–€в–€в–€в–€в–€в–€в–€в•—в–€в–€в•—в–‘в–‘в–‘в–‘в–‘в–‘в–€в–€в–€в–€в–€в•—в–‘в–‘в–€в–€в–€в–€в–€в–€в•—в–€в–€в•—в–‘в–‘в–€в–€в•—в–‘в–€в–€в•—в–‘в–‘в–‘в–‘в–‘в–‘в–‘в–€в–€в•—
-в–€в–€в•”в•ђв•ђв•ђв•ђв•ќв–€в–€в•‘в–‘в–‘в–‘в–‘в–‘в–€в–€в•”в•ђв•ђв–€в–€в•—в–€в–€в•”в•ђв•ђв•ђв•ђв•ќв–€в–€в•‘в–‘в–‘в–€в–€в•‘в–‘в–€в–€в•‘в–‘в–‘в–€в–€в•—в–‘в–‘в–€в–€в•‘
-в–€в–€в–€в–€в–€в•—в–‘в–‘в–€в–€в•‘в–‘в–‘в–‘в–‘в–‘в–€в–€в–€в–€в–€в–€в–€в•‘в•љв–€в–€в–€в–€в–€в•—в–‘в–€в–€в–€в–€в–€в–€в–€в•‘в–‘в•љв–€в–€в•—в–€в–€в–€в–€в•—в–€в–€в•”в•ќ
-в–€в–€в•”в•ђв•ђв•ќв–‘в–‘в–€в–€в•‘в–‘в–‘в–‘в–‘в–‘в–€в–€в•”в•ђв•ђв–€в–€в•‘в–‘в•љв•ђв•ђв•ђв–€в–€в•—в–€в–€в•”в•ђв•ђв–€в–€в•‘в–‘в–‘в–€в–€в–€в–€в•”в•ђв–€в–€в–€в–€в•‘в–‘
-в–€в–€в•‘в–‘в–‘в–‘в–‘в–‘в–€в–€в–€в–€в–€в–€в–€в•—в–€в–€в•‘в–‘в–‘в–€в–€в•‘в–€в–€в–€в–€в–€в–€в•”в•ќв–€в–€в•‘в–‘в–‘в–€в–€в•‘в–‘в–‘в•љв–€в–€в•”в•ќв–‘в•љв–€в–€в•”в•ќв–‘
-в•љв•ђв•ќв–‘в–‘в–‘в–‘в–‘в•љв•ђв•ђв•ђв•ђв•ђв•ђв•ќв•љв•ђв•ќв–‘в–‘в•љв•ђв•ќв•љв•ђв•ђв•ђв•ђв•ђв•ќв–‘в•љв•ђв•ќв–‘в–‘в•љв•ђв•ќв–‘в–‘в–‘в•љв•ђв•ќв–‘в–‘в–‘в•љв•ђв•ќв–‘в–‘
+L2:CreateButton("MyDot", function()
+--[[       
+    0.0459
+    0.0095
+    0.0322
+    0.1377
+    0.2377
+    0.1563
+    0.058 
 
+
+
+
+
+
+--LocalScript
+--put this script in a TextLabel
+
+local delay2 = 0.1 
+local TextLabel = script.Parent 
+while true do 
+	TextLabel.TextColor3 = Color3.new(255, 0, 0) 
+	wait(delay2) 
+	TextLabel.TextColor3 = Color3.new(1, 0.333333, 0) 
+	wait(delay2) 
+	TextLabel.TextColor3 = Color3.new(1, 1, 0) 
+	wait(delay2) 
+	TextLabel.TextColor3 = Color3.new(0.333333, 1, 0) 
+	wait(delay2) 
+	TextLabel.TextColor3 = Color3.new(0, 0.482353, 1)
+	wait(delay2) 
+	TextLabel.TextColor3 = Color3.new(0.333333, 0, 0.498039)
+	wait(delay2) 
+end
 ]]
--- Toggle
-getgenv().Target = true
--- Configuration
-getgenv().Key = Enum.KeyCode.Q
-getgenv().Prediction = 0.1337
-getgenv().ChatMode = false
-getgenv().NotifMode = false
-    getgenv().PartMode = true
-    getgenv().AirshotFunccc = false
-    getgenv().Partz = "UpperTorso"
-getgenv().AutoPrediction = false
---
-    _G.Types = {
-        Ball = Enum.PartType.Ball,
-        Block = Enum.PartType.Block, 
-        Cylinder = Enum.PartType.Cylinder
-    }
-    
-    --variables                 
-    	local Tracer = Instance.new("Part", game.Workspace)
-    Tracer.Name = "gay"	
-    Tracer.Anchored = true		
-    Tracer.CanCollide = false
-    Tracer.Transparency = 0.8
-    Tracer.Parent = game.Workspace	
-    Tracer.Shape = _G.Types.Block
-    Tracer.Size = Vector3.new(14,14,14)
-    Tracer.Color = Color3.fromRGB(128,128,128)
-    
-    --
-    local plr = game.Players.LocalPlayer
-local mouse = plr:GetMouse()
-local Runserv = game:GetService("RunService")
-
-circle = Drawing.new("Circle")
-circle.Color = Color3.fromRGB(255,255,255)
-circle.Thickness = 0
-circle.NumSides = 5000
-circle.Radius = 75
-circle.Thickness = 0
-circle.Transparency = 1
-circle.Visible = false
-circle.Filled = false
-
-Runserv.RenderStepped:Connect(function()
-    circle.Position = Vector2.new(mouse.X,mouse.Y+35)
-end)
-    
-    	local guimain = Instance.new("Folder", game.CoreGui)
-    	local CC = game:GetService"Workspace".CurrentCamera
-    local LocalMouse = game.Players.LocalPlayer:GetMouse()
-    	local Locking = false
-    
-    	
-    --
-    if getgenv().valiansh == true then
-                        game.StarterGui:SetCore("SendNotification", {
-                   Title = "Valiant",
-                   Text = "Already Loaded!",
-                   Duration = 5
-        
-                   })
-        return
-    end
-    
-    getgenv().valiansh = true
-    
-        local UserInputService = game:GetService("UserInputService")
-
-    UserInputService.InputBegan:Connect(function(keygo,ok)
-           if (not ok) then
-           if (keygo.KeyCode == getgenv().Key) then
-               if getgenv().Target == true then
-               Locking = not Locking
-               
-               if Locking then
-               Plr =  getClosestPlayerToCursor()
-                if getgenv().ChatMode then
-        local A_1 = "Target: "..tostring(Plr.Character.Humanoid.DisplayName) local A_2 = "All" local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest Event:FireServer(A_1, A_2) 
-        	end	
-               if getgenv().NotifMode then
-    			game.StarterGui:SetCore("SendNotification", {
-        Title = "";
-        Text = "Target: "..tostring(Plr.Character.Humanoid.DisplayName);
-    
-    })
-    end
-    elseif not Locking then
-         if getgenv().ChatMode then
-        local A_1 = "Unlocked!" local A_2 = "All" local Event = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest Event:FireServer(A_1, A_2) 
-        	end	
-        if getgenv().NotifMode then
-                        game.StarterGui:SetCore("SendNotification", {
-                   Title = "",
-                   Text = "Unlocked",
-                   Duration = 5
-               })
-           elseif getgenv().Target == false then
-                        game.StarterGui:SetCore("SendNotification", {
-                   Title = "",
-                   Text = "Target isn't enabled",
-                   Duration = 5
-     
-                   })
-               
-               end
-                  
- 
- end     end   
-end
-end
-end)
-	
-	function getClosestPlayerToCursor()
-		local closestPlayer
-		local shortestDistance = circle.Radius
-
-		for i, v in pairs(game.Players:GetPlayers()) do
-			if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild("LowerTorso") then
-				local pos = CC:WorldToViewportPoint(v.Character.PrimaryPart.Position)
-				local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(LocalMouse.X, LocalMouse.Y)).magnitude
-				if magnitude < shortestDistance then
-					closestPlayer = v
-					shortestDistance = magnitude
-				end
-			end
-		end
-		return closestPlayer
-	end
---
-if getgenv().PartMode then
-	game:GetService"RunService".Stepped:connect(function()
-		if Locking and Plr.Character and Plr.Character:FindFirstChild("LowerTorso") then
-			Tracer.CFrame = CFrame.new(Plr.Character.LowerTorso.Position+(Plr.Character.LowerTorso.Velocity*Prediction))
-		else
-			Tracer.CFrame = CFrame.new(0, 9999, 0)
-
-		end
-	end)
-end
-
-    
-    
-    --
-	local rawmetatable = getrawmetatable(game)
-	local old = rawmetatable.__namecall
-	setreadonly(rawmetatable, false)
-	rawmetatable.__namecall = newcclosure(function(...)
-		local args = {...}
-		if Locking and getnamecallmethod() == "FireServer" and args[2] == "UpdateMousePos" then
-			args[3] = Plr.Character[getgenv().Partz].Position+(Plr.Character[getgenv().Partz].Velocity*Prediction)
-			return old(unpack(args))
-		end
-		return old(...)
-	end)
-
-
-if getgenv().AirshotFunccc == true then
-
-            if Plr.Character.Humanoid.Jump == true and Plr.Character.Humanoid.FloorMaterial == Enum.Material.Air then
-                getgenv().Partz = "Head"
-            else
-                Plr.Character:WaitForChild("Humanoid").StateChanged:Connect(function(old,new)
-                    if new == Enum.HumanoidStateType.Freefall then
-                    getgenv().Partz = "Uppertorso"
-                    else
-                        getgenv().Partz = "LowerTorso"
-                    end
-                end)
-            end
-end
----
-	while wait() do
-	if getgenv().AutoPrediction == true then
-        local pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
-        local split = string.split(pingvalue,'(')
-        local ping = tonumber(split[1])
-        if ping < 130 then
-            getgenv().Prediction = 0.151
-        elseif ping < 125 then
-            getgenv().Prediction = 0.149
-        elseif ping < 110 then
-            getgenv().Prediction = 0.146
-        elseif ping < 105 then
-            getgenv().Prediction = 0.138
-        elseif ping < 90 then
-            getgenv().Prediction = 0.136
-        elseif ping < 80 then
-            getgenv().Prediction = 0.134
-        elseif ping < 70 then
-            getgenv().Prediction = 0.131
-        elseif ping < 60 then
-            getgenv().Prediction = 0.1229
-        elseif ping < 50 then
-            getgenv().Prediction = 0.1225
-        elseif ping < 40 then
-            getgenv().Prediction = 0.1256
-        end
-	end
-    end
-end)
-
-Chann1:Button("KāīDot", function()
 local ScreenGui = Instance.new("ScreenGui")
 local TextLabel = Instance.new("TextLabel")
 
@@ -250,7 +184,7 @@ ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 _G.KEY = "q"
 _G.PART = "HumanoidRootPart"
-_G.PRED = 0.12628
+_G.PRED = 0.1563
 _G.Frame = Vector3.new(0,0.53,0)
 
 
@@ -502,151 +436,68 @@ wait(0.05)
     end
     
 end
- -- The Scirpt The Button Executes
+
 end)
 
-Chann1:Button("JoseLock", function()
-loadstring(game:HttpGet("https://pastebin.com/raw/A60RhPrZ"))()-- The Scirpt The Button Executes
+
+L2:CreateButton("Silent Aim", function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Nosssa/NossLock/main/SimpleSilentAim"))()
 end)
 
-Chann1:Label("———————————————teleport———————————————")
 
-Chann1:Button("DoubleBarrelSG", function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(332.6334228515625, 57.04527282714844, -1763.2945556640625) -- The Scirpt The Button Executes
+L2:CreateButton("Storm!", function()
+	for i,v in pairs(game:GetService'Players'.LocalPlayer.Character:GetChildren())do                 if v:isA("Tool") then                     local a = Instance.new("SelectionBox",v.Handle)                     a.Adornee = v.Handle                         v.GripPos = Vector3.new(51,-150,51,500,500)                    lplayer.Character.Humanoid:UnequipTools()                 end end
+
 end)
 
-Chann1:Button("Revolver", function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(222.515793, 57.045728, -1163.8186) -- The Scirpt The Button Executes
+
+L3:CreateButton("TryHard #1", function()
+_, Protected_by_MoonSecV2, Discord = 'discord.gg/gQEH2uZxUk'
+
+
+,nil,nil;(function() _msec=(function(e,l,o)local q=l[(0x7c+-92)];local Y=o[e[(62469/(0xa1+-62))]][e[(0x15cd8/122)]];local k=(63+-0x3b)/((-191-(-0x1a+-61))+0x6a)local O=(0x6a-(0x121-(250+-0x41)))-(0x6d+-108)local s=o[e[(0xe0+-28)]][e[(12054/0x29)]];local u=((618-(0x9d44/110))/0xfc)+(-99+0x65)local H=o[e[(1250-(1475-0x316))]][e[(1871-0x3e5)]]local n=(0x22-32)-(-88+((22161/0x53)-178))local i=(0x1bc/((0x7888/(191+-0x27))+-55))local M=(((0x9666/(0xcf+-21))-0x84)-72)local f=(((((-0x6b+1582)-767)-0x19d)-194)-0x62)local a=(128+(-8625/(((-83+-0x16)+0x1821)/88)))local F=(0x58+((-0x12+(-0x27-6))+-22))local r=((0x421-((0xb92080/120)/0xb2))/163)local L=(0x264/(((-0x2f60+-117)/155)+232))local U=((((-0x10+20002)+-0x72)/0xd8)-0x58)local p=(((927-(0x3f9-518))/0x4)-103)local D=((-0x71+((3175200/0x7e)/175))-27)local _=(-85+(299-(0x33ae/(143+-0x50))))local w=((((-657+-0x39)/0x11)+782)/185)local c=((((0x3f3-551)-285)-0x7e)-0x2f)local m=((((0x1921e/129)-454)-230)-0x70)local P=((4+(-6844/(0xe8/4)))+116)local B=(((-61+(182+(-0x3436/163)))-37)/1)local K=(((((-0x2409/225)-36)+-0x69)+0x52)+102)local x=((-0x2568/(((-14036/0x74)+437)-190))+78)local G=e[(339726/0xf6)];local Q=o[e[(0x4670/92)]][e[(7429/0x11)]];local A=o[(function(e)return type(e):sub(1,1)..'\101\116'end)('FbllHkKF')..'\109\101'..('\116\97'or'PLmFbLOk')..e[(0x4ab-630)]];local g=o[e[((-0x1918/88)+638)]][e[(0x404+-110)]];local C=(106-0x68)-(((-27+(500+-0x4e))-0x105)/67)local N=(((-42+(0xb2+-110))-0x32)+26)-(0x15-19)local j=o[e[(287+-0x5b)]][e[(-0x54+465)]];local l=function(l,e)return l..e end local S=(944/0xec)*(((0x17b-251)+-80)-0x2c)local J=o[e[((-0x1368/46)+1226)]];local h=(86/0x2b)*(0xae+(0x9+(0x0+-55)))local v=(0x878-1144)*(((-174+0x35)+0x40)+59)local V=(192-(2100/(105+-0x5a)))local t=(-0x1e+(146-(0x4a5e/167)))*(85-0x53)local y=o[e[(-22+0x426)]]or o[e[((10144575/0x85)/0x87)]][e[(-22+0x426)]];local b=(620-((-0x55+39033)/107))local e=o[e[(-0x67+1336)]];local g=(function(b)local h,o=1,0x10 local l={j={},v={}}local d=-n local e=o+O while true do l[b:sub(e,(function()e=h+e return e-O end)())]=(function()d=d+n return d end)()if d==(S-n)then d=""o=C break end end local d=#b while e<d+O do l.v[o]=b:sub(e,(function()e=h+e return e-O end)())o=o+n if o%k==C then o=N g(l.j,(j((l[l.v[N]]*S)+l[l.v[n]])))end end return H(l.j)end)("..:::MoonSec::..bBfFlLkKoOpPhHmMBPPLKffMMkpmkkfFmbbbhkoblBMFFMbMhooLlfkkBHmkOPMkPKkHfpmKMkHkohBhbkPmKMbpOllObkhFhpPfkKfKPLOMLKBoKffHmfOMLhKbFKMMPPlmFoMbPBoOhkKPFoMLMoHbOoLLmKHBoOlpblLKlMHOomlPboBkHoObKlBhmbOLLBObKlfKmlpBOMoOlBbfPFoFFLMoPlFlklolFpMKPlhBOplhfBhpOlLfBkkfBkHFObObKffoMkpfkBfMHHpKhKHokhfOmkbPHlOBlpHBoFlblLbfPMFFFlmmOmkLfLmPLmLbBOHlLFlfBBhmKHlOhBomKLfHhFKOFBMFpPkHfKmKpkLHbKPBkfBMHhBbpOKPBoHmOOkpbPmFOKFHBbPKFHmMphkOkKLBbOhpKPlPMHhbKhBlmhKObOPMKhFOFKfBHOOplPBPhOlbmOOPLoBLBmMmpMkpFfHFphLmFFHhpkBbPfkPfomLbohboolLpbLKBbhHopOBKOfmmmKkfBPLKffMLlBHHpOFBphhoOomlPboKhKHFKmKpmkmFlpKOOkfBHOhoPLpBKhkOfbpHKPmKkbhhFKOFHMPPfKkFBmoppPfMfpPkofLlPbFhoKmlOOKLbbHhpMBPOkmfmlOlbMLPfkMKlLmBFhlomlhbFPPFpHPomlPboflmBPfkBBhmPpLLLBfHPpBbHpBLmBPlbbOhkKMbkPoKLKpFKMlkokOfFHFOpLpfbOFoLlmbOooKKlkbFPfKmMkhFppkfMopMkHflmKpbLpBpHhOobbHmOKLlBBlLmhPBKOmBpOFhMOPkHPplkBBppBLFBbBLHfoMbFblPmkmFLMLPPfmfbmOplfFBfmBOmlHBOOBLmlLMHOFllbbhLKHFPMKPpKbfmMbkkFhmMphkOkKLBbOhpKPlPMHhbKhMHoblkbfPMKhOoPHHhKbfHmpbMHoOLlmHLoKlllObkhFFKFoMfpfkOfOmMkfLlBHHoLKlkBLHfoBlHhLOfKOFBhKKHFLMKpMKBFbmLpLkBKPPmkkfFmbbBhFopFKbbhbkMMkmhpOfmfFhpKPFPmfmfolLMMOhhfBmlOoLLBfBfMoPfKFfLhBpPkFflLmFLmmpPkoOhlFbPhKoHHkOFLbbHhpoKFllbhoKmFoMLPfmBpBLKbPoHfbHHOpPMoolLMmoLFKMlMOPkKFmKmopfLfBOHOOMBfblhHoobKMkhLofFBMHKLlffOmBKKfomlpOkBBHHOOHLOBohmoMBkHFOblMbMhKollBMMPPKoFLblHKkhfOmkPpkbBHHpOKLlBBhmoPlobLhfKMFhMOPkKlFbmHppkKflMFOmLPBOHLOMlMbhhOOolFbbPmKpLFMlPBkmLBmopLkFBMmLOOLKBFmmoHlmBHhloBFmblPoKkFfMFhfkOfkmFppLHBPHKOlOKbmhPoolkbfPMKhFPMPPFKBfHmppKklfBMbhfLoBkHfOKlhbOhkOLKKMHPPKKlHMBpmkPfoMkpfkbBhHpOkLLBbHFhllKbLhBPFFPMOPLKffMMbPMkkfFmbHfLpBoHlpFoLbPhOoLllMMPhKOLkBFPbkmfpmoplkPBmMPOoLLBFhMoHlOBkhFpbFHMpPoKlFfmmPkkolLmfOMLHBOHKOFLMbHmpoKllbFPmKhFobOPfoMfhmOpokFffHHpFLKllHBomlHboHFofLKMhHOKkFFMfpHkPfKMopBKmBPHoOKLfBBhhpllkFFhbKHFhMKhfKBlkmPhoKMffmBOhLpBkMFObkHFMhKoklBbbPPKHFLffpMkhfPmkPBkbFpHpPKLlBBHboPlObLmlKMLhMOPkKLFbmMppkpflBBOmLPBpHLpblMBohOpklFbbPMKpFoMlhkkmlPmopLklBMHmOOLpBFbboHlpbOhloMFmBmPoOLFfmMpmkOfKmFpBLHFpHKOlLFbmhHooklbfmMOKFOMoPFKmfHblpKolFMHmOHLoBkHfpblhfOhkoFlfMHPhKKFpMBHmkPfomKpfkHBhmhOkkLBbhHohlKbkhBKmFPBoPLKfFBmhpPkkfHmbPHLpBKHkOBLbbPHooLkfMMPhKPFkMLPbKofpbKplkBfbHPOpLLfohMPhlObkhLoblMMpPmKllFmmpPkpfLMPOMLhBOmopMLbBbhppollbBPmKPFOMLPlkMfmmOpKkFflMFOpLKBlmBomlhbohOOoFMMhPOofFFMBpHkpkHmlpBLmBhHoOLLfbMhmoOlkbFhoKHFpMKKlKBfmmPpoBKfmHMOhLOoHfkMoOLLPBkmKookbBlPpoHBOpMkhfOmkpFkboHBppMLoBBhmoPpPkHfFMBKoMOPkKFFbmHppLKkFBLplLPBoHLbLhFKmFfMlppbFhbKpFKMlflmFoHFBpOkfBMHhMPhMoKFLpmlpbKhlOFKLMPPPKLFlmMphkOfkfbpbkbBpHpOlLfbmHBhflLbLPMoFFOMKPFKbfHmmPHklfBHmpfLoBkHfpBoFbOhOoFlfMHPpKKFlfmpmkmfomopfkbBhHOhbLFBFhHohlKblhBObLKMoPoKfFlmhpOkkFLBfOHLmBKHLOBlmbPHpoLlfblPhKmFkMFPbkHfpmKppkBBmHPOoLLflhMohLbbkhoobFHMpPPKlFBMFpPoLfLmFOMLhFHHkOhLbBBhpoKllBFboKPlfMLPokMfhmOhkkFfbmKOpkBBlHLomkPbohLoHFMMhPOKHFFMbpHkpFlmlpOLmBPHoOLLfbMHpoOlmbFhbKHFpMKPlKhfmMOpokKffMMOhLOfBHFOPlHBfhKollBMmhkKoFKMfPBkhfOmkpFkPBHmLOKLKBBmmoPloBbhfopFhMhPkKFFbmHPlkKfkmBpbLPBoHLOfLFbhHfoklHbbPHKpFKMHPBKBfPmppLofBMHhOhLkBhHbOblpbPMMoBlFMPhLKLFFmMPmpbfkmopbLMBpHKOlLBfHhPoHlLbFPMobFOMkHHKbFBmppOklfBHmOPOmBLHfoMlHbOhkoFlFMHPpKKFlMFpmkPfolFpKLMBhHObkPkKBFOMklPblhBKmFPMoPLKffMbOpOkkfFMfPOLpBOHlOFlmbPhoOKLmMMPMKOFoMFPbkHFhBmplkLBmHhOoLLBfHLoMlObPhFobFHMPPKKoFBmmPHkofLmfpBLhBOHkOFkfbHhpoKllbBPmKPFobKPfkMfhmhpkkFfbHHphLKBlHBoMlPbohLoflbMhPHKkFLMbpmkpfHbHpBLmBPMBOLLFbMhHoOlpBOhbKHFpBbPlKffmMBppkLffHMppLOBKHFOBlHbmHHollBMmhOKoFkMfPFoffOmkpFKOBHHPOKLpBFhmohloBkhfobFhMOPkKKlkmHppkKFLmBOMLPBhmPOflMbhmfokllbbPHPMFKMoPBKbfPmPpLkfklHhOmLkBkHboMlpbHmHoBlfMPHBKLFFmMPBkOfpMOpbLHBpMbOlLfbmhPhHlLbkPMKmFOMOPFKbKfmpphklflHmOHLoBPHloMLbbOmboFlBMHPMKKFobKpmkPfoMMpfkbBhHOHpLFBlhHoplKblhBKmkbMoPOKfFbmhpOkkfFbpOHLmBKHkOBlmbPhohPlfMMPhKpFkMFPbkMfPmKplkBBmHPOoLLBOhMohlObkHhobFHMpPoKlFBmmpPkofLmfOMLhBOHkOFLbbHhpoKllbBPmKPFoMLPfkMfhmOpOkFfbHHOpLKBlHBomlPbohLofFMMhPOKkFFMfpHkpfKmlpBLmBPHoOkLfbMhhoOlkbFhbKH");local H=((0xbd+-38)-84)local o=8 local d=n;local e={}e={[(94-0x5d)]=function()local O,n,l,e=s(g,d,d+u);d=d+t;o=(o+(H*t))%b;return(((e+o-(H)+h*(t*k))%h)*((k*v)^k))+(((l+o-(H*k)+h*(k^u))%b)*(h*b))+(((n+o-(H*u)+v)%b)*h)+((O+o-(H*t)+v)%b);end,[((452-0xf0)/0x6a)]=function(e,e,e)local e=s(g,d,d);d=d+O;o=(o+(H))%b;return((e+o-(H)+v)%h);end,[(0x177/125)]=function()local e,l=s(g,d,d+k);o=(o+(H*k))%b;d=d+k;return(((l+o-(H)+h*(k*t))%h)*b)+((e+o-(H*k)+b*(k^u))%h);end,[(96-0x5c)]=function(l,e,o)if o then local e=(l/k^(e-n))%k^((o-O)-(e-n)+O);return e-e%n;else local e=k^(e-O);return(l%(e+e)>=e)and n or N;end;end,[(-0x78+(0xaf+-50))]=function()local l=e[(70-0x45)]();local d=e[(0x7c-123)]();local x=n;local o=(e[(-0x27+(-0x34+95))](d,O,S+t)*(k^(S*k)))+l;local l=e[(804/0xc9)](d,21,31);local e=((-n)^e[(0x41-61)](d,32));if(l==N)then if(o==C)then return e*N;else l=O;x=C;end;elseif(l==(h*(k^u))-O)then return(o==N)and(e*(O/C))or(e*(N/C));end;return Y(e,l-((b*(t))-n))*(x+(o/(k^V)));end,[(972/0xa2)]=function(l,k,k)local k;if(not l)then l=e[(76-0x4b)]();if(l==N)then return'';end;end;k=Q(g,d,d+l-n);d=d+l;local e=''for l=O,#k do e=G(e,j((s(Q(k,l,l))+o)%b))o=(o+H)%h end return e;end}local function g(...)return{...},J('#',...)end local function v()local f={};local B={};local l={};local P={f,B,nil,l};local o={}local M=(2940/0xd2)local l={[(18-0x11)]=(function(l)return not(#l==e[((-0x3e-0)+64)]())end),[((194-0x9f)-0x1f)]=(function(l)return e[(-0x31+54)]()end),[(480/0xa0)]=(function(l)return e[(130-0x7c)]()end),[(0x63-97)]=(function(l)local d=e[(0x1e/5)]()local e=''local l=1 for o=1,#d do l=(l+M)%b e=G(e,j((s(d:sub(o,o))+l)%h))end return e end)};local d=e[(0x50-79)]()for d=1,d do local e=e[((4185/0x87)-29)]();local n;local e=l[e%(58+-0x33)];o[d]=e and e({});end;for b=1,e[(-39+0x28)]()do local l=e[(-106+0x6c)]();if(e[(0x2ec/187)](l,n,O)==C)then local h=e[(0x370/220)](l,k,u);local d=e[(70-0x42)](l,t,k+t);local l={e[(-114+0x75)](),e[(0x12/6)](),nil,nil};local a={[(0x22+(-0x50c/38))]=function()l[a]=e[(28-0x19)]();l[w]=e[(-113+0x74)]();end,[((0x155b/77)-0x46)]=function()l[F]=e[(64-0x3f)]();end,[(0x53-(11340/0x8c))]=function()l[r]=e[(0x2e-45)]()-(k^S)end,[(50-0x2f)]=function()l[F]=e[(0x55+-84)]()-(k^S)l[p]=e[(0x1ef/(660/0x4))]();end};a[h]();if(e[(-0x16+26)](d,O,n)==O)then l[x]=o[l[K]]end if(e[(117-(-38+0x97))](d,k,k)==n)then l[F]=o[l[i]]end if(e[(0x24-32)](d,u,u)==O)then l[U]=o[l[_]]end f[b]=l;end end;P[3]=e[(113-0x6f)]();for e=O,e[(-117+0x76)]()do B[e-O]=v();end;return P;end;local function N(e,t,H)local d=e[k];local o=e[u];local e=e[n];return(function(...)local v={};local h=e;local C=d;local s={...};local d=n;local S=J('#',...)-O;local b=o;local o={};local e=g local u={};local e=n e*=-1 local e=e;for e=0,S do if(e>=b)then v[e-b]=s[e+O];else o[e]=s[e+n];end;end;local e=S-b+n local e;local b;while true do e=h[d];b=e[(99/0x63)];l=(5068635)while(0x1224/129)>=b do l-= l l=(9302331)while(-0x33+68)>=b do l-= l l=(1050757)while((0x2486/110)-0x4d)>=b do l-= l l=(5635575)while b<=(77-0x4a)do l-= l l=(2145612)while(0x47+-70)>=b do l-= l l=(2129760)while b>(0x6d-109)do l-= l local e=e[x]o[e](o[e+O])break end while 870==(l)/(((806361/0xa3)-2499))do if(o[e[x]]==o[e[w]])then d=d+O;else d=e[a];end;break end;break;end while(l)/((3482+-0x26))==623 do l=(10279050)while b>(-63+0x41)do l-= l local b=C[e[a]];local n;local l={};n=A({},{__index=function(o,e)local e=l[e];return e[1][e[2]];end,__newindex=function(d,e,o)local e=l[e]e[1][e[2]]=o;end;});for n=1,e[p]do d=d+O;local e=h[d];if e[(-70+0x47)]==18 then l[n-1]={o,e[M]};else l[n-1]={t,e[F]};end;u[#u+1]=l;end;o[e[B]]=N(b,n,H);break end while(l)/((6974-0xdab))==2958 do if(o[e[B]]~=o[e[_]])then d=d+O;else d=e[f];end;break end;break;end break;end while 3795==(l)/((0x215ac/92))do l=(2465715)while b<=(260/0x34)do l-= l l=(261630)while(-102+0x6a)<b do l-= l o[e[c]]=N(C[e[r]],nil,H);break end while 2565==(l)/(((-17+0xf7)-0x80))do o[e[m]][o[e[r]]]=o[e[D]];break end;break;end while(l)/((0x68e-873))==3063 do l=(2125545)while b<=(558/0x5d)do l-= l o[e[x]]=o[e[i]]%e[L];break;end while 1403==(l)/((0x60c+-33))do l=(3236553)while b>(0x1e-(0xa5-142))do l-= l local e=e[B]o[e]=o[e](o[e+O])break end while(l)/((0x1f83-4086))==813 do o[e[B]]=t[e[M]];break end;break;end break;end break;end break;end while(l)/((1986+-0x4f))==551 do l=(6898089)while(1860/0x9b)>=b do l-= l l=(11692209)while b<=(41+-0x1f)do l-= l l=(9538948)while(-100+0x6d)<b do l-= l o[e[K]]=(e[r]~=0);d=d+O;break end while 2666==(l)/(((1784081/0xf7)-0xe3d))do local e=e[K]o[e]=o[e]()break end;break;end while(l)/((-0x6c+3337))==3621 do l=(3395727)while b>(138-0x7f)do l-= l t[e[r]]=o[e[x]];break end while 2763==(l)/((2582-0x549))do o[e[K]][e[f]]=e[U];break end;break;end break;end while(l)/((-0x2b+1882))==3751 do l=(5276088)while(56-0x2a)>=b do l-= l l=(6231038)while b>(0x64-87)do l-= l if(o[e[P]]==e[p])then d=d+O;else d=e[r];end;break end while 2354==(l)/((0x9b19/15))do local l=e[B]o[l]=o[l](y(o,l+n,e[a]))break end;break;end while(l)/((332232/0x6d))==1731 do l=(4397625)while(3555/0xed)>=b do l-= l o[e[B]]=(e[f]~=0);break;end while(l)/((0x5b9e0/96))==1125 do l=(5434340)while b>((19+-0x7c)+0x79)do l-= l local e=e[B]o[e]=o[e]()break end while(l)/((0xe47-(-95+0x7b2)))==3053 do o[e[m]]=t[e[r]];break end;break;end break;end break;end break;end break;end while(l)/((0x2eb63/63))==3063 do l=(2937330)while(79+-0x35)>=b do l-= l l=(13591956)while(0x3f/3)>=b do l-= l l=(335550)while(0x2ac/36)>=b do l-= l l=(2444070)while(0x33+-33)<b do l-= l local l=e[x]o[l]=o[l](y(o,l+n,e[M]))break end while(l)/((0x304b0/104))==1285 do o[e[c]]=o[e[M]];break end;break;end while 150==(l)/((4525-0x8f0))do l=(350460)while b>((5544/0x38)+-79)do l-= l do return end;break end while 396==(l)/((1872-0x3db))do local l=e[x];local d=o[e[M]];o[l+1]=d;o[l]=d[e[p]];break end;break;end break;end while 3612==(l)/((3830+-0x43))do l=(870232)while b<=(-0x6e+133)do l-= l l=(1207170)while b>(1056/0x30)do l-= l do return o[e[m]]end break end while(l)/((0x227+-41))==2367 do d=e[f];break end;break;end while 899==(l)/((0x19c28/109))do l=(113498)while b<=(528/0x16)do l-= l o[e[c]]=o[e[F]][o[e[D]]];break;end while 938==(l)/((366-0xf5))do l=(10325997)while(625/(-103+0x80))<b do l-= l o[e[P]]=o[e[f]][e[L]];break end while 2819==(l)/((-0x58+3751))do o[e[B]]=t[e[M]];d=d+n;e=h[d];o[e[B]]=#o[e[M]];d=d+n;e=h[d];t[e[M]]=o[e[c]];d=d+n;e=h[d];o[e[K]]=t[e[i]];d=d+n;e=h[d];o[e[m]]=#o[e[F]];d=d+n;e=h[d];t[e[f]]=o[e[B]];d=d+n;e=h[d];do return end;break end;break;end break;end break;end break;end while(l)/((0xf4b-1980))==1518 do l=(7635292)while b<=(88-0x39)do l-= l l=(12829600)while(0x4e+-50)>=b do l-= l l=(53024)while b>(95+-0x44)do l-= l o[e[x]]=e[a];break end while 1657==(l)/((-0x4e+110))do o[e[x]][e[i]]=e[p];break end;break;end while(l)/((707050/0xb3))==3248 do l=(998658)while((0xe1+-86)-0x6e)>=b do l-= l o[e[P]]=o[e[f]]%e[L];break;end while 509==(l)/((-0x74+2078))do l=(1708875)while(0x12fc/(0x188-230))<b do l-= l o[e[P]][o[e[f]]]=o[e[D]];break end while(l)/((951-0x1e6))==3675 do o[e[B]]=o[e[a]][e[_]];d=d+n;e=h[d];o[e[x]]=o[e[f]][e[L]];d=d+n;e=h[d];o[e[K]][e[a]]=e[L];d=d+n;e=h[d];o[e[B]]=H[e[a]];d=d+n;e=h[d];o[e[m]]=o[e[M]][e[w]];d=d+n;e=h[d];o[e[x]]=o[e[f]][e[w]];d=d+n;e=h[d];o[e[K]]=o[e[a]][e[w]];d=d+n;e=h[d];o[e[B]]=o[e[F]][e[w]];d=d+n;e=h[d];o[e[m]][e[F]]=e[w];d=d+n;e=h[d];o[e[P]]=H[e[f]];break end;break;end break;end break;end while(l)/((0x1654-2912))==2723 do l=(3300480)while b<=(0x143d/157)do l-= l l=(4620770)while(85-0x35)<b do l-= l if(o[e[c]]==e[_])then d=d+O;else d=e[r];end;break end while(l)/((0xf84+-89))==1190 do o[e[P]]=o[e[M]][e[_]];d=d+n;e=h[d];o[e[x]]=o[e[f]][e[p]];d=d+n;e=h[d];o[e[K]]=o[e[r]][e[w]];d=d+n;e=h[d];o[e[P]]=o[e[a]][e[_]];d=d+n;e=h[d];o[e[m]]=o[e[F]][e[U]];d=d+n;e=h[d];o[e[P]]=o[e[r]][e[L]];d=d+n;e=h[d];o[e[P]][e[f]]=e[L];d=d+n;e=h[d];o[e[c]]=o[e[a]][e[w]];d=d+n;e=h[d];o[e[m]]=o[e[F]][e[D]];d=d+n;e=h[d];o[e[m]][e[f]]=e[D];break end;break;end while(l)/((0x1e42-3926))==864 do l=(1321488)while b<=(-0x76+152)do l-= l o[e[B]]=N(C[e[f]],nil,H);break;end while 3312==(l)/((838-0x1b7))do l=(7272846)while b>(1610/0x2e)do l-= l o[e[x]]=o[e[M]];break end while(l)/(((-0x1856/89)+2121))==3546 do if o[e[x]]then d=d+n;else d=e[i];end;break end;break;end break;end break;end break;end break;end break;end while(l)/((247698/0xa2))==3315 do l=(1328784)while b<=(2200/0x28)do l-= l l=(2261000)while(3240/0x48)>=b do l-= l l=(524156)while b<=(0xba-146)do l-= l l=(4727921)while(0x23c6/241)>=b do l-= l l=(740544)while b>((0x4beb/169)-78)do l-= l local e={o,e};e[O][e[k][x]]=e[n][e[k][U]]+e[O][e[k][r]];break end while(l)/((0x58a+-74))==551 do o[e[m]]=(e[F]~=0);break end;break;end while(l)/((4543-0x90c))==2123 do l=(1352692)while b>(-0x6f+150)do l-= l H[e[F]]=o[e[c]];d=d+n;e=h[d];o[e[B]]={};d=d+n;e=h[d];o[e[x]]={};d=d+n;e=h[d];H[e[f]]=o[e[P]];d=d+n;e=h[d];o[e[m]]=H[e[a]];d=d+n;e=h[d];if(o[e[P]]==e[U])then d=d+O;else d=e[r];end;break end while(l)/((1773-0x38b))==1562 do H[e[M]]=o[e[P]];break end;break;end break;end while(l)/((0x4fb57/147))==236 do l=(947928)while b<=(5208/(-0x6a+230))do l-= l l=(7209104)while b>(0x6f-70)do l-= l do return o[e[K]]end break end while(l)/((378944/0x7c))==2359 do if(o[e[x]]==o[e[L]])then d=d+O;else d=e[M];end;break end;break;end while(l)/((0x1817-3119))==311 do l=(1204632)while b<=(0x99-110)do l-= l local l=e[B];local n=o[l]local b=o[l+2];if(b>0)then if(n>o[l+1])then d=e[f];else o[l+3]=n;end elseif(n<o[l+1])then d=e[a];else o[l+3]=n;end break;end while(l)/((0x6c8-878))==1404 do l=(288176)while(-0x3c+104)<b do l-= l local l=e[K];local d=o[e[f]];o[l+1]=d;o[l]=d[e[L]];break end while 434==(l)/((1433-0x301))do o[e[P]]=e[i];break end;break;end break;end break;end break;end while 595==(l)/((0xef8+-32))do l=(5941782)while(3650/0x49)>=b do l-= l l=(1517876)while b<=(0x2284/188)do l-= l l=(395819)while(0xc5-151)<b do l-= l local l=e[K];local b=o[l+2];local n=o[l]+b;o[l]=n;if(b>0)then if(n<=o[l+1])then d=e[f];o[l+3]=n;end elseif(n>=o[l+1])then d=e[M];o[l+3]=n;end break end while(l)/(((624337/0x4f)-3984))==101 do local e={o,e};e[O][e[k][x]]=e[n][e[k][p]]+e[O][e[k][F]];break end;break;end while 2417==(l)/((0x54b-727))do l=(1084852)while(163+-0x73)>=b do l-= l H[e[a]]=o[e[P]];break;end while 739==(l)/((3000-0x5fc))do l=(2575786)while(-0x79+170)<b do l-= l local O;local b;local l;o[e[P]]=e[a];d=d+n;e=h[d];o[e[B]]=e[f];d=d+n;e=h[d];o[e[B]]=#o[e[i]];d=d+n;e=h[d];o[e[c]]=e[a];d=d+n;e=h[d];l=e[B];b=o[l]O=o[l+2];if(O>0)then if(b>o[l+1])then d=e[a];else o[l+3]=b;end elseif(b<o[l+1])then d=e[F];else o[l+3]=b;end break end while(l)/((-0x28+1022))==2623 do o[e[c]]=H[e[i]];break end;break;end break;end break;end while(l)/((0x10a2-2179))==2858 do l=(2847408)while b<=(0xea0/72)do l-= l l=(4186023)while(-0x6c+159)<b do l-= l o[e[P]]=#o[e[a]];break end while 3193==(l)/((13110/0xa))do o[e[x]]={};break end;break;end while(l)/((-99+0x727))==1644 do l=(10900656)while b<=(0x95+-96)do l-= l o[e[c]]=o[e[r]][e[p]];d=d+n;e=h[d];o[e[c]][e[i]]=e[U];d=d+n;e=h[d];o[e[x]]=o[e[r]][e[L]];d=d+n;e=h[d];o[e[K]]=o[e[F]][e[U]];d=d+n;e=h[d];o[e[K]][e[i]]=e[U];d=d+n;e=h[d];o[e[B]]=o[e[M]][e[_]];d=d+n;e=h[d];o[e[B]]=o[e[M]][e[L]];d=d+n;e=h[d];o[e[K]][e[F]]=e[L];d=d+n;e=h[d];o[e[m]]=o[e[f]][e[L]];d=d+n;e=h[d];o[e[B]]=o[e[r]][e[p]];break;end while(l)/((0x7c158/181))==3882 do l=(13870532)while b>(0x8a6/41)do l-= l o[e[x]]=H[e[M]];break end while 3614==(l)/((3863+-0x19))do o[e[K]]={};break end;break;end break;end break;end break;end break;end while 372==(l)/((0x1c5a-3686))do l=(5633400)while(170-0x6a)>=b do l-= l l=(727744)while(0x90-85)>=b do l-= l l=(4850916)while(1881/0x21)>=b do l-= l l=(2660840)while b>(169-0x71)do l-= l t[e[f]]=o[e[K]];break end while 3094==(l)/((128140/0x95))do d=e[i];break end;break;end while(l)/((0x16d8/4))==3318 do l=(8812608)while((0x13f-198)+-0x3f)<b do l-= l local l=e[K];local b=o[l+2];local n=o[l]+b;o[l]=n;if(b>0)then if(n<=o[l+1])then d=e[F];o[l+3]=n;end elseif(n>=o[l+1])then d=e[i];o[l+3]=n;end break end while(l)/((-18+0x8b6))==3984 do if o[e[P]]then d=d+n;else d=e[r];end;break end;break;end break;end while 1328==(l)/((0x272+-78))do l=(9198336)while(0x3378/216)>=b do l-= l l=(823171)while b>(97+-0x25)do l-= l o[e[B]]=o[e[r]][o[e[D]]];break end while 257==(l)/(((0x1994+-117)-3228))do local e=e[m]o[e]=o[e](o[e+O])break end;break;end while 3776==(l)/((0x29a18/70))do l=(202708)while b<=(0x86+-72)do l-= l local l=e[P];local n=o[l]local b=o[l+2];if(b>0)then if(n>o[l+1])then d=e[M];else o[l+3]=n;end elseif(n<o[l+1])then d=e[F];else o[l+3]=n;end break;end while 748==(l)/((30623/0x71))do l=(849024)while(0x9f-96)<b do l-= l local e=e[x]o[e](o[e+O])break end while(l)/((0x5f8+(-0x4b+21)))==576 do if(o[e[P]]~=o[e[D]])then d=d+O;else d=e[M];end;break end;break;end break;end break;end break;end while(l)/((0xcf5-1677))==3435 do l=(3237300)while b<=(0x2646/142)do l-= l l=(838480)while b<=(214-0x94)do l-= l l=(3785838)while(0x3142/194)<b do l-= l local d=e[r];local l=o[d]for e=d+1,e[p]do l=l..o[e];end;o[e[x]]=l;break end while(l)/((0x963+-121))==1659 do local k=C[e[M]];local b;local l={};b=A({},{__index=function(o,e)local e=l[e];return e[1][e[2]];end,__newindex=function(d,e,o)local e=l[e]e[1][e[2]]=o;end;});for n=1,e[w]do d=d+O;local e=h[d];if e[(86+-0x55)]==18 then l[n-1]={o,e[a]};else l[n-1]={t,e[r]};end;u[#u+1]=l;end;o[e[m]]=N(k,b,H);break end;break;end while 376==(l)/((158330/0x47))do l=(6109530)while(159-0x5c)>=b do l-= l local d=e[a];local l=o[d]for e=d+1,e[_]do l=l..o[e];end;o[e[P]]=l;break;end while(l)/((2070+-0x60))==3095 do l=(416305)while b>(158-(-0x43+157))do l-= l o[e[x]]=o[e[a]]-o[e[U]];break end while(l)/((0x101e9/(17005/0xb3)))==599 do o[e[x]]=(e[r]~=0);d=d+O;break end;break;end break;end break;end while 900==(l)/((0xc2f46/222))do l=(538510)while(105+-0x22)>=b do l-= l l=(5354016)while(200-0x82)<b do l-= l o[e[P]]=#o[e[M]];break end while(l)/((202332/(9282/0x77)))==2064 do do return end;break end;break;end while(l)/((2303+-0x69))==245 do l=(10670934)while(103+-0x1f)>=b do l-= l o[e[c]]=o[e[i]]-o[e[p]];break;end while 2694==(l)/((0x1f07-3982))do l=(2965196)while b>(218-(348-0xcb))do l-= l local M;local b;local B;local l;o[e[x]]=H[e[a]];d=d+n;e=h[d];o[e[P]]=o[e[r]][e[U]];d=d+n;e=h[d];l=e[K];B=o[e[r]];o[l+1]=B;o[l]=B[e[w]];d=d+n;e=h[d];o[e[c]]=o[e[r]];d=d+n;e=h[d];o[e[c]]=o[e[r]];d=d+n;e=h[d];l=e[x]o[l]=o[l](y(o,l+n,e[i]))d=d+n;e=h[d];l=e[P];B=o[e[i]];o[l+1]=B;o[l]=B[e[p]];d=d+n;e=h[d];l=e[x]o[l]=o[l](o[l+O])d=d+n;e=h[d];b={o,e};b[O][b[k][x]]=b[n][b[k][p]]+b[O][b[k][a]];d=d+n;e=h[d];o[e[m]]=o[e[a]]%e[w];d=d+n;e=h[d];l=e[x]o[l]=o[l](o[l+O])d=d+n;e=h[d];B=e[f];M=o[B]for e=B+1,e[U]do M=M..o[e];end;o[e[K]]=M;d=d+n;e=h[d];b={o,e};b[O][b[k][K]]=b[n][b[k][p]]+b[O][b[k][f]];d=d+n;e=h[d];o[e[m]]=o[e[a]]%e[D];break end while(l)/((0xe4c-1864))==1651 do o[e[c]]=o[e[f]][e[_]];break end;break;end break;end break;end break;end break;end break;end d+= O end;end);end;return N(v(),{},q())()end)_msec({[(7840/0x28)]='\115\116'..(function(e)return(e and'(0x8fc/(61+-0x26))')or'\114\105'or'\120\58'end)((74-(0xad-104))==(-0x1f+(-95+0x84)))..'\110g',[(0x15cd8/122)]='\108\100'..(function(e)return(e and'(0x131-205)')or'\101\120'or'\119\111'end)(((-0x6d+939)/166)==((234+-0x7e)/18))..'\112',[(12054/0x29)]=(function(e)return(e and'((44702/0xd9)+-106)')and'\98\121'or'\100\120'end)((42-0x25)==(0x19a/82))..'\116\101',[(-0x54+465)]='\99'..(function(e)return(e and'(0xdc+(-18+-0x66))')and'\90\19\157'or'\104\97'end)((129-0x7c)==(0x68+-101))..'\114',[(1174-(-66+0x2a3))]='\116\97'..(function(e)return(e and'(0xde-122)')and'\64\113'or'\98\108'end)((0x7a-116)==(15/0x3))..'\101',[(7429/0x11)]=(function(e)return(e and'(0x3520/(0xe8+-96))')or'\115\117'or'\78\107'end)((366/0x7a)==(151+-0x78))..'\98',[(1871-0x3e5)]='\99\111'..(function(e)return(e and'(-0x54+184)')and'\110\99'or'\110\105\103\97'end)((-94+0x7d)==(1829/0x3b))..'\97\116',[((2651-0x546)-0x29e)]=(function(e,l)return(e and'(296-0xc4)')and'\48\159\158\188\10'or'\109\97'end)((0x59-84)==(0x1a+-20))..'\116\104',[(146386/0x6a)]=(function(e,l)return((104-0x63)==(0x71-110)and'\48'..'\195'or e..((not'\20\95\69'and'\90'..'\180'or l)))or'\199\203\95'end),[(0x404+-110)]='\105\110'..(function(e,l)return(e and'(-43+0x8f)')and'\90\115\138\115\15'or'\115\101'end)((0x63+-94)==(103-0x48))..'\114\116',[(-22+0x426)]='\117\110'..(function(e,l)return(e and'(-0x34+152)')or'\112\97'or'\20\38\154'end)((0x3a7/187)==(3286/0x6a))..'\99\107',[((-0x1368/46)+1226)]='\115\101'..(function(e)return(e and'(0x87+-35)')and'\110\112\99\104'or'\108\101'end)((31+-0x1a)==(0x8c-109))..'\99\116',[(-0x67+1336)]='\116\111\110'..(function(e,l)return(e and'(0x898/22)')and'\117\109\98'or'\100\97\120\122'end)((0x3f-58)==(36-0x1f))..'\101\114'},{[(0xb7-151)]=((getfenv))},((getfenv))()) end)()
+
+end)
+L4:CreateButton("Backrooms", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48112.796875, 10815.830078125, -47357.50390625)
 end)
 
-Chann1:Button("DownHill", function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(463.822509765625, 57.32100296020508, -1321.987060546875) -- The Scirpt The Button Executes
+
+L4:CreateButton("DoubleBarrelSG", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(341.6957092285156, 57.04527282714844, -1754.225341796875)
 end)
 
-Chann1:Button("Food", function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(181.77667236328125, 97.959716796875, -442.0047607421875) -- The Scirpt The Button Executes
+
+L4:CreateButton("Revolver", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(222.515793, 57.045728, -1163.8186)
 end)
 
-Chann1:Button("Backrooms", function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48729.2734375, 10815.8291015625, -47655.16796875) -- The Scirpt The Button Executes
+
+L4:CreateButton("UpHill", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(276.60064697265625, 96.58828735351562, -289.332275390625)
 end)
 
-Chann1:Button("Armor", function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(117.07687377929688, 143.33924865722656, -1179.832275390625)
+
+L4:CreateButton("DownHill", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(467.4198913574219, 57.32100296020508, -1319.4285888671875)
 end)
 
-Chann1:Button("UpHill", function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(276.7944030761719, 96.58828735351562, -287.5398254394531)  -- The Scirpt The Button Executes
+
+L4:CreateButton("FitNess", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(316.4746398925781, 97.38158416748047, -546.8848266601562)
 end)
 
-Chann1:Label("————————————————Others———————————————")
 
-Chann1:Button("15x", function()
-loadstring("\108\111\97\100\115\116\114\105\110\103\40\34\92\49\48\56\92\49\49\49\92\57\55\92\49\48\48\92\49\49\53\92\49\49\54\92\49\49\52\92\49\48\53\92\49\49\48\92\49\48\51\92\52\48\92\49\48\51\92\57\55\92\49\48\57\92\49\48\49\92\53\56\92\55\50\92\49\49\54\92\49\49\54\92\49\49\50\92\55\49\92\49\48\49\92\49\49\54\92\52\48\92\51\52\92\49\48\52\92\49\49\54\92\49\49\54\92\49\49\50\92\49\49\53\92\53\56\92\52\55\92\52\55\92\49\49\52\92\57\55\92\49\49\57\92\52\54\92\49\48\51\92\49\48\53\92\49\49\54\92\49\48\52\92\49\49\55\92\57\56\92\49\49\55\92\49\49\53\92\49\48\49\92\49\49\52\92\57\57\92\49\49\49\92\49\49\48\92\49\49\54\92\49\48\49\92\49\49\48\92\49\49\54\92\52\54\92\57\57\92\49\49\49\92\49\48\57\92\52\55\92\53\52\92\53\52\92\55\49\92\49\48\48\92\57\55\92\55\49\92\49\49\49\92\49\48\48\92\52\55\92\52\57\92\53\51\92\56\56\92\52\53\92\54\55\92\56\50\92\54\53\92\54\55\92\55\53\92\54\57\92\54\56\92\52\55\92\49\48\57\92\57\55\92\49\48\53\92\49\49\48\92\52\55\92\54\57\92\57\48\92\51\55\92\53\48\92\52\56\92\54\55\92\56\50\92\54\53\92\54\55\92\55\53\92\54\57\92\54\56\92\51\55\92\53\48\92\52\56\92\54\54\92\56\57\92\51\55\92\53\48\92\52\56\92\55\55\92\55\51\92\55\56\92\51\55\92\53\48\92\52\56\92\56\56\92\51\55\92\53\48\92\52\56\92\57\48\92\55\57\92\56\50\92\54\56\92\55\57\92\51\52\92\52\52\92\49\49\54\92\49\49\52\92\49\49\55\92\49\48\49\92\52\49\92\52\49\92\52\48\92\52\49\92\49\48\34\41\40\41\10")()
-
- -- The Scirpt The Button Executes
+L4:CreateButton("Armor", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(121.40573120117188, 137.66273498535156, -1184.98828125)
 end)
 
-Chann1:Button("DeleteDisplayNames", function()
-while wait(1) do 
-for i,v in pairs(game.Players:GetPlayers()) do
-    v.Character.Humanoid.DisplayName = v.Name
-  end
-end
+
+L4:CreateButton("Rpg", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(510.67181396484375, 22.167882919311523, -1485.8492431640625)
 end)
 
-Chann1:Button("KeyBoard", function()
-loadstring(game:HttpGet(('https://raw.githubusercontent.com/manimcool21/Keyboard-FE/main/Protected%20(3).lua'),true))()
-end)
 
-Chann1:Button("Only6EXLock", function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/0nly6Ex/wfwf/main/aimbot"))()
----- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Carlhub", function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/carlcoded/carlispro/main/carlhub'))()
- -- The Scirpt The Button Executes
-end)
-
-Chann1:Button("PickleAssist", function()
-loadstring(game:HttpGet("https://pastebin.com/raw/2CitME2H"))() -- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Auto.Stomp.Gui.by.Kai", function()
-local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
-
-local w = library:CreateWindow("Untitled hood") -- Creates the window
-
-local b = w:CreateFolder("Auto") -- Creates the folder(U will put here your buttons,etc)
-
-b:Button("Auto Stomp On",function()
-getgenv().l = true
-while getgenv().l do
-wait(0.000000000001)
-local args = {
-    [1] = "Stomp"
-}
-
-game:GetService("ReplicatedStorage"):FindFirstChild(".gg/untitledhood"):FireServer(unpack(args))
-end
-end)
-
-b:Button("Auto Stomp Off",function()
-getgenv().l = false
-while getgenv().l do
-wait(0.000000000001)
-local args = {
-    [1] = "Stomp"
-}
-
-game:GetService("ReplicatedStorage"):FindFirstChild(".gg/untitledhood"):FireServer(unpack(args))
-end
-end)
-
-b:DestroyGui()
-
---[[
-How to refresh a dropdown:
-1)Create the dropdown and save it in a variable
-local yourvariable = b:Dropdown("Hi",yourtable,function(a)
-    print(a)
-end)
-2)Refresh it using the function
-yourvariable:Refresh(yourtable)
-How to refresh a label:
-1)Create your label and save it in a variable
-local yourvariable = b:Label("Pretty Useless NGL",{
-    TextSize = 25; -- Self Explaining
-    TextColor = Color3.fromRGB(255,255,255);
-    BgColor = Color3.fromRGB(69,69,69);
-})
-2)Refresh it using the function
-yourvariable:Refresh("Hello") It will only change the text ofc
-]]
--- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Soon", function()
-DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Soon", function()
-DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Soon", function()
-DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Soon", function()
-DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Soon", function()
-DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
-end)
-
-Chann1:Button("Soon", function()
-DiscordLib:Notification("Notification", "Clicked", "Okay!") -- The Scirpt The Button Executes
+L4:CreateButton("Save Zone", function()
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(48626.9375, 10842.6787109375, -47419.8828125)
 end)

@@ -450,6 +450,9 @@ L2:CreateButton("Storm!", function()
 
 end)
 
+L2:CreateButton("AutoClick", function()
+game.Players.LocalPlayer:kick("User Banned")
+end)
 
 L3:CreateButton("TryHard #1", function()
 _, Protected_by_MoonSecV2, Discord = 'discord.gg/gQEH2uZxUk'

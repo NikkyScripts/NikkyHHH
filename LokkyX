@@ -1,5 +1,5 @@
 if game.Players.LocalPlayer.UserId == 234490779 then
-if game.Players.LocalPlayer.UserId == 234490779 then
+if game.Players.LocalPlayer.UserId == 245936971 then
 if game.Players.LocalPlayer.UserId == 234490779 then
 if game.Players.LocalPlayer.UserId == 234490779 then
 if game.Players.LocalPlayer.UserId == 234490779 then
@@ -7,7 +7,7 @@ if game.Players.LocalPlayer.UserId == 234490779 then
 if game.Players.LocalPlayer.UserId == 234490779 then
 if game.Players.LocalPlayer.UserId == 234490779 then
 
-  loadstring(game:HttpGet("https://raw.githubusercontent.com/NikkyScripts/NikkyHHH/main/LokkyX"))()
+  loadstring(game:HttpGet("https://pastebin.com/raw/5jV0iJJV"))()
 end
 end
 end
